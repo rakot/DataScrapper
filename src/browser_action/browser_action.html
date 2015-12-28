@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/skeleton.css" type="text/css" />
+    <link rel="stylesheet" href="/css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="/css/scrapper.css" type="text/css" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/scrapper.js"></script>
+    <title></title>
+</head>
+<body style="width: 550px; height: 500px;" class="highlight">
+<div style="padding: 20px;">
+    <div class="row">
+        <div class="eight columns">
+            <select style="width: 100%;">
+            </select>
+        </div>
+
+        <div class="four columns">
+            <button class="green" title="Add Formula">+</button>
+            <button class="red" title="Remove Formula">-</button>
+        </div>
+    </div>
+    <div class="row">
+        <label for="rowSelector">Row jQuery Selector</label>
+        <input class="u-full-width" id="rowSelector" placeholder="can be blank" type="text">
+    </div>
+    <div class="row" style="margin: 10px;">
+        <table class="u-full-width selectors">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Selector</th>
+                <th><button class="green" title="Add row">+</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input class="u-full-width" type="text"></td>
+                <td><input class="u-full-width" type="text"></td>
+                <td><button class="red" title="Delete row">-</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <button class="green" id="save-button" title="Save">&#128190;</button>
+        <button class="red" id="load-button" title="Load">&#128194;</button>
+        <button class="green" id="export-button" title="Export">&#127757;</button>
+        <button class="green" style="float: right;" id="run-button" title="Scrap data">&#128257;</button>
+    </div>
+
+</div>
+</body>
+</html>
