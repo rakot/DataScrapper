@@ -18,3 +18,17 @@ table td, table th {
     color: #fff !important;
     border-color: #d43f3a;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #666;
+    display: none;
+}
+
+.overlay .container{
+    padding: 200px 50px;
+}
