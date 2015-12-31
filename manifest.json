@@ -22,8 +22,7 @@
   },
   "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "DataScrapper",
-    "default_popup": "src/browser_action/browser_action.html"
+    "default_title": "DataScrapper"
   },
   "permissions": [
     "storage",

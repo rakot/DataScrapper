@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/normalize.css" type="text/css" />
     <link rel="stylesheet" href="/css/scrapper.css" type="text/css" />
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/scrapper.js"></script>
+    <script src="/js/interface.js"></script>
     <title></title>
 </head>
 <body style="width: 550px; height: 500px;" class="highlight">
@@ -19,7 +19,7 @@
 
         <div class="four columns">
             <button class="green" id="AddFormula" title="Add Formula">+</button>
-            <button class="red" title="Remove Formula">-</button>
+            <button class="red" id="RemoveFormula" title="Remove Formula">-</button>
         </div>
     </div>
     <div class="row">
@@ -51,11 +51,28 @@
         <button class="green" style="float: right;" id="RunButton" title="Scrap data">&#128257;</button>
     </div>
 </div>
-<div class="overlay">
+<div class="overlay" id="setNameOverlay">
     <div class="container">
         <input id="SetFormulaInput" type="text">
         <button class="green" id="SetFormulaName" title="Set Formula Name">&#10003;</button>
-        <button class="red" id="CancelFormulaName" title="Cancel">&#10006;</button>
+        <button class="red CloseOverlay" id="CancelFormulaName" title="Cancel">&#10006;</button>
+    </div>
+</div>
+<div class="overlay" id="setExportFormula">
+    <div class="container">
+        <textarea id="exportFormulaInput"></textarea>
+        <div style="float: right;">
+            <button class="red CloseOverlay" title="Cancel">&#10006;</button>
+        </div>
+    </div>
+</div>
+<div class="overlay" id="setImportFormula">
+    <div class="container">
+        <textarea id="importFormulaInput"></textarea>
+        <div style="float: right;">
+            <button class="green" id="buttonImportFormula" title="Import Formula">&#10003;</button>
+            <button class="red CloseOverlay" title="Cancel">&#10006;</button>
+        </div>
     </div>
 </div>
 </body>

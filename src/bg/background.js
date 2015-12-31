@@ -1,8 +1,6 @@
-// if you checked "fancy-settings" in extensionizr.com, uncomment this lines
+chrome.browserAction.onClicked.addListener(function(){
+    var w = 550;
+    var h = Math.round(screen.height*0.6);
 
-// var settings = new Store("settings", {
-//     "sample_setting": "This is how you use Store.js to remember values"
-// });
-
-
-//example of using a message handler from the inject scripts
+    chrome.windows.create({url: chrome.extension.getURL('/src/browser_action/interface.html'), width: w, height: h, left: 100, top: 100});
+});

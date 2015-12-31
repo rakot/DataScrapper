@@ -30,5 +30,10 @@ table td, table th {
 }
 
 .overlay .container{
-    padding: 200px 50px;
+    padding: 200px 0;
+}
+
+.overlay textarea {
+    width: 300px;
+    height: 200px;
 }
