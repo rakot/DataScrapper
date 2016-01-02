@@ -23,7 +23,7 @@ $(function(){
                 $('#colselector').val(formula.row);
                 $('.selectors tbody tr').remove();
                 formula.cols.forEach(function(val){
-                    var tr = $('<tr><td><input class="u-full-width" type="text"></td><td><input class="u-full-width" type="text"></td><td><button class="red" title="Delete row">-</button></td></tr>');
+                    var tr = $('<tr class="row"><td class="col-sm-3"><input class="form-control" type="text"></td><td class="col-sm-7"><input class="form-control" type="text"></td><td class="col-sm-2"><button class="btn btn-danger" title="Delete col">Remove</button></td></tr>');
                     tr.find('input:eq(0)').val(val.title);
                     tr.find('input:eq(1)').val(val.selector);
                     $('.selectors tbody').append(tr);
@@ -65,11 +65,11 @@ $(function(){
     changeCurrentFormula();
     $('#formulaList').change(changeCurrentFormula);
 
-    $( document ).on( 'click', '.selectors .green', function(){
-        $('.selectors tbody').append('<tr><td><input class="u-full-width" type="text"></td><td><input class="u-full-width" type="text"></td><td><button class="red" title="Delete row">-</button></td></tr>');
+    $( document ).on( 'click', '.selectors .btn-success', function(){
+        $('.selectors tbody').append('<tr class="row"><td class="col-sm-3"><input class="form-control" type="text"></td><td class="col-sm-7"><input class="form-control" type="text"></td><td class="col-sm-2"><button class="btn btn-danger" title="Delete col">Remove</button></td></tr>');
     });
 
-    $( document ).on( 'click', '.selectors .red', function(){
+    $( document ).on( 'click', '.selectors .btn-danger', function(){
         var self = $(this);
         self.parents('tr').remove();
     });
@@ -79,6 +79,7 @@ $(function(){
     $('#AddFormula').click(function(){
         SetFormulaInput.val('');
         $('#setNameOverlay').show();
+        $('#mainContent').hide();
     });
 
     $('#RemoveFormula').click(function(){
@@ -107,6 +108,7 @@ $(function(){
             saveFormulas();
             SetFormulaInput.val('');
             $('.overlay').hide();
+            $('#mainContent').show();
             updateFormulaList();
             $('#formulaList').val($('#formulaList option:last').val());
             changeCurrentFormula();
@@ -116,11 +118,13 @@ $(function(){
     $('#LoadButton').click(function(){
         $('#importFormulaInput').val('');
         $('#setImportFormula').show();
+        $('#mainContent').hide();
     });
 
     $('#ExportButton').click(function(){
         $('#exportFormulaInput').val(btoa(JSON.stringify(getCurrentFormula())));
         $('#setExportFormula').show();
+        $('#mainContent').hide();
     });
 
     $('#buttonImportFormula').click(function(){
@@ -131,12 +135,14 @@ $(function(){
                 formulas[$('#formulaList').val()] = data;
                 changeCurrentFormula();
                 $('.overlay').hide();
+                $('#mainContent').show();
             }
         }
     });
 
     $('.CloseOverlay').click(function(){
         $('.overlay').hide();
+        $('#mainContent').show();
     });
 
     $('#SaveButton').click(function(){

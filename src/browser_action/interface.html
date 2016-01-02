@@ -2,79 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/skeleton.css" type="text/css" />
-    <link rel="stylesheet" href="/css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/css/scrapper.css" type="text/css" />
-    <script src="/js/jquery.min.js"></script>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/bootstrap.min.js"></script>
     <script src="/js/csv.js"></script>
     <script src="/js/interface.js"></script>
     <title></title>
 </head>
-<body style="width: 550px; height: 500px;" class="highlight">
-<div style="padding: 20px;">
-    <div class="row">
-        <div class="eight columns">
-            <select id="formulaList" style="width: 100%;">
-            </select>
-        </div>
+<body>
+<fieldset class="container-fluid" id="mainContent">
+    <div style="padding: 10px 0 20px;">
+        <fieldset class="form-group row">
+            <div class="col-sm-8">
+                <select class="form-control" id="formulaList">
+                </select>
+            </div>
 
-        <div class="four columns">
-            <button class="green" id="AddFormula" title="Add Formula">+</button>
-            <button class="red" id="RemoveFormula" title="Remove Formula">-</button>
+            <div class="col-sm-4">
+                <button class="btn btn-success" id="AddFormula" title="Add Formula">Add</button>
+                <button class="btn btn-danger" id="RemoveFormula" title="Remove Formula">Remove</button>
+            </div>
+        </fieldset>
+        <fieldset class="form-group row">
+            <div class="col-sm-8">
+                <input class="form-control" id="rowSelector" placeholder="can be blank" type="text">
+            </div>
+            <label for="rowSelector" class="col-sm-4 form-control-label">Row jQuery selector</label>
+        </fieldset>
+        <div class="row" style="margin: 10px 0;">
+            <table class="selectors table table-striped table-hover">
+                <thead>
+                <tr class="row">
+                    <th class="col-sm-3">Name</th>
+                    <th class="col-sm-7">Selector</th>
+                    <th class="col-sm-2"><button class="btn btn-success" title="Add col">Add</button></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr class="row"><td class="col-sm-3"><input class="form-control" type="text"></td><td class="col-sm-7"><input class="form-control" type="text"></td><td class="col-sm-2"><button class="btn btn-danger" title="Delete col">Remove</button></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <label for="rowSelector">Row jQuery Selector</label>
-        <input class="u-full-width" id="rowSelector" placeholder="can be blank" type="text">
-    </div>
-    <div class="row" style="margin: 10px;">
-        <table class="u-full-width selectors">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Selector</th>
-                <th><button class="green" title="Add col">+</button></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input class="u-full-width" type="text"></td>
-                <td><input class="u-full-width" type="text"></td>
-                <td><button class="red" title="Delete col">-</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <button class="green" id="SaveButton" title="Save">&#128190;</button>
-        <button class="red" id="LoadButton" title="Load">&#128194;</button>
-        <button class="green" id="ExportButton" title="Export">&#127757;</button>
-        <button class="green" style="float: right;" id="RunButton" title="Scrap data">&#128257;</button>
-    </div>
-</div>
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
+        <button class="btn btn-success" id="SaveButton" title="Save">Save</button>
+        <button class="btn btn-success" id="ExportButton" title="Export">Export</button>
+        <button class="btn btn-danger" id="LoadButton" title="Import">Import</button>
+        <button class="btn btn-success" style="float: right;" id="RunButton" title="Scrap data">Download CSV</button>
+    </nav>
+</fieldset>
 <div class="overlay" id="setNameOverlay">
-    <div class="container">
-        <input id="SetFormulaInput" type="text">
-        <button class="green" id="SetFormulaName" title="Set Formula Name">&#10003;</button>
-        <button class="red CloseOverlay" id="CancelFormulaName" title="Cancel">&#10006;</button>
+    <fieldset class="single-input">
+        <fieldset class="form-group row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6">
+                <input id="SetFormulaInput" class="form-control" type="text">
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-success" id="SetFormulaName" title="Set Formula Name">Set</button>
+                <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+            </div>
+            <div class="col-sm-1"></div>
+        </fieldset>
     </div>
 </div>
 <div class="overlay" id="setExportFormula">
-    <div class="container">
+    <div class="textarea">
         <textarea id="exportFormulaInput"></textarea>
-        <div style="float: right;">
-            <button class="red CloseOverlay" title="Cancel">&#10006;</button>
-        </div>
     </div>
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
+        <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+    </nav>
 </div>
 <div class="overlay" id="setImportFormula">
-    <div class="container">
+    <div class="textarea">
         <textarea id="importFormulaInput"></textarea>
-        <div style="float: right;">
-            <button class="green" id="buttonImportFormula" title="Import Formula">&#10003;</button>
-            <button class="red CloseOverlay" title="Cancel">&#10006;</button>
-        </div>
     </div>
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
+        <button class="btn btn-success" id="buttonImportFormula" title="Import Formula">Import Formula</button>
+        <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+    </nav>
 </div>
 </body>
 </html>
