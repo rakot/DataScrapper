@@ -1,13 +1,33 @@
-chrome.extension.sendMessage({}, function(response) {
-	var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		clearInterval(readyStateCheckInterval);
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		if(request.action == 'parseData') {
+			var formula = request.formula;
+			var result = [];
+			if(formula.row) {
+				// Row mode
+			} else {
+				// Col mode
+				var subresult = [];
+				formula.cols.forEach(function(el){
+					var col = [];
+					col.push(el.title);
+					$(el.selector).each(function(){
+						col.push($(this).text());
+					});
+					subresult.push(col);
+				});
 
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Hello. This message was sent from scripts/inject.js");
-		// ----------------------------------------------------------
-
+				if(subresult.length) {
+					for (var i in subresult[0]) {
+						var row = [];
+						subresult.forEach(function(el){
+							row.push(el[i] || '-');
+						});
+						result.push(row);
+					}
+				}
+			}
+			sendResponse(result);
+		}
 	}
-	}, 10);
-});
+);

@@ -1,5 +1,6 @@
 $(function(){
-    formulas = [];
+    var formulas = [];
+    var tab_opener = 0;
     if(localStorage.getItem('formulas')) {
         var json_formulas = JSON.parse(localStorage.getItem('formulas'));
         json_formulas.forEach(function(val){
@@ -19,9 +20,9 @@ $(function(){
         if(formulas.length) {
             var formula = getCurrentFormula();
             if(formula) {
-                $('#rowSelector').val(formula.row);
+                $('#colselector').val(formula.row);
                 $('.selectors tbody tr').remove();
-                formula.rows.forEach(function(val){
+                formula.cols.forEach(function(val){
                     var tr = $('<tr><td><input class="u-full-width" type="text"></td><td><input class="u-full-width" type="text"></td><td><button class="red" title="Delete row">-</button></td></tr>');
                     tr.find('input:eq(0)').val(val.title);
                     tr.find('input:eq(1)').val(val.selector);
@@ -36,13 +37,13 @@ $(function(){
             var formula = formulas[$('#formulaList').val()];
             if(formula) {
                 formula.row = $('#rowSelector').val();
-                formula.rows = [];
+                formula.cols = [];
                 $('.selectors tbody tr').each(function(){
                     var self = $(this);
                     var title = self.find('input:eq(0)').val();
                     var selector = self.find('input:eq(1)').val();
                     if(selector) {
-                        formula.rows.push({
+                        formula.cols.push({
                             title: title,
                             selector: selector
                         });
@@ -101,7 +102,7 @@ $(function(){
             formulas.push({
                 title: SetFormulaInput.val(),
                 row: '',
-                rows: []
+                cols: []
             });
             saveFormulas();
             SetFormulaInput.val('');
@@ -141,5 +142,17 @@ $(function(){
     $('#SaveButton').click(function(){
         saveCurrentFormula();
         alert('Saved');
+    });
+
+    $('#RunButton').click(function(){
+        chrome.tabs.sendMessage(tab_opener,{action: 'parseData', formula: getCurrentFormula()},{},function(response) {
+            if(response && response.length) {
+                exportToCsv(getCurrentFormula().title+'.csv',response);
+            }
+        });
+    });
+
+    chrome.runtime.sendMessage({action: "whatIsMyOpenerId"}, function(response) {
+        tab_opener = response;
     });
 });
