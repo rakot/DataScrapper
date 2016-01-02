@@ -5,6 +5,18 @@ chrome.runtime.onMessage.addListener(
 			var result = [];
 			if(formula.row) {
 				// Row mode
+				result.push([]);
+				formula.cols.forEach(function(el){
+					result[0].push(el.title);
+				});
+				$(formula.row).each(function(){
+					var row = $(this);
+					var row_result = [];
+					formula.cols.forEach(function(el){
+						row_result.push($.trim(row.find(el.selector).text()) || '-');
+					});
+					result.push(row_result);
+				});
 			} else {
 				// Col mode
 				var subresult = [];
@@ -12,7 +24,7 @@ chrome.runtime.onMessage.addListener(
 					var col = [];
 					col.push(el.title);
 					$(el.selector).each(function(){
-						col.push($(this).text());
+						col.push($.trim($(this).text()));
 					});
 					subresult.push(col);
 				});

@@ -5,7 +5,7 @@
     }
   },
   "name": "DataScrapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Extension for FF and Chrome to extract data from web pages to csv.",
   "homepage_url": "https://github.com/rakot/DataScrapper",

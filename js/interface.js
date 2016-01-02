@@ -20,7 +20,7 @@ $(function(){
         if(formulas.length) {
             var formula = getCurrentFormula();
             if(formula) {
-                $('#colselector').val(formula.row);
+                $('#rowSelector').val(formula.row);
                 $('.selectors tbody tr').remove();
                 formula.cols.forEach(function(val){
                     var tr = $('<tr class="row"><td class="col-sm-3"><input class="form-control" type="text"></td><td class="col-sm-7"><input class="form-control" type="text"></td><td class="col-sm-2"><button class="btn btn-danger" title="Delete col">Remove</button></td></tr>');
