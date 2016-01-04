@@ -1,32 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="dataScrapper">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/css/scrapper.css" type="text/css" />
     <script src="/js/vendor/jquery.min.js"></script>
-
+    <script src="/js/vendor/angular.min.js"></script>
     <script src="/js/csv.js"></script>
     <script src="/js/interface.js"></script>
-    <title></title>
+    <title>DataScrapper</title>
 </head>
-<body>
-<fieldset class="container-fluid" id="mainContent">
-    <div style="padding: 10px 0 20px;">
+<body ng-controller="InterfaceController">
+<nav class="navbar navbar-fixed-top ng-hide" ng-show="showSaveAlert">
+    <div class="alert alert-success" role="alert">
+        <strong>Save!</strong> You successfully save you current configuration.
+    </div>
+</nav>
+<fieldset class="container-fluid ng-hide" ng-show="showView == 'main'" id="mainContent">
+    <div style="padding: 10px 0 40px;">
         <fieldset class="form-group row">
-            <div class="col-sm-8">
-                <select class="form-control" id="formulaList">
+            <div class="col-sm-6">
+                <select class="form-control" ng-model="currentFormulaIndex" ng-change="setCurrentFormula()">
+                    <option ng-repeat="option in formulas track by $index" value="{{$index}}" >{{option.title}}</option>
                 </select>
             </div>
 
-            <div class="col-sm-4">
-                <button class="btn btn-success" id="AddFormula" title="Add Formula">Add</button>
-                <button class="btn btn-danger" id="RemoveFormula" title="Remove Formula">Remove</button>
+            <div class="col-sm-6 text-sm-right">
+                <button class="btn btn-success" id="AddFormula" ng-click="setNameMode = 'add'; showView = 'name'" title="Add Formula">Add</button>
+                <button class="btn btn-primary" ng-click="formulaName = currentFormula.title;setNameMode = 'rename'; showView = 'name'" ng-class="(currentFormulaIndex == undefined) ? 'disabled' : ''">Rename</button>
+                <button class="btn btn-danger" ng-click="removeFormula()" ng-class="(currentFormulaIndex == undefined) ? 'disabled' : ''" title="Remove Formula">Remove</button>
             </div>
         </fieldset>
         <fieldset class="form-group row">
             <div class="col-sm-8">
-                <input class="form-control" id="rowSelector" placeholder="can be blank" type="text">
+                <input class="form-control" id="rowSelector" placeholder="can be blank" ng-model="currentFormula.row" type="text">
             </div>
             <label for="rowSelector" class="col-sm-4 form-control-label">Row jQuery selector</label>
         </fieldset>
@@ -36,52 +43,66 @@
                 <tr class="row">
                     <th class="col-sm-3">Name</th>
                     <th class="col-sm-7">Selector</th>
-                    <th class="col-sm-2"><button class="btn btn-success" title="Add col">Add</button></th>
+                    <th class="col-sm-2 text-sm-right"><button class="btn btn-success" ng-click="addCol()" title="Add col">Add</button></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr class="row"><td class="col-sm-3"><input class="form-control" type="text"></td><td class="col-sm-7"><input class="form-control" type="text"></td><td class="col-sm-2"><button class="btn btn-danger" title="Delete col">Remove</button></td></tr>
+                    <tr class="row" ng-repeat="col in currentFormula.cols track by $index">
+                        <td class="col-sm-3">
+                            <input class="form-control" type="text" ng-model="col.title">
+                        </td>
+                        <td class="col-sm-7">
+                            <input class="form-control" type="text" ng-model="col.selector">
+                        </td>
+                        <td class="col-sm-2 text-sm-right">
+                            <button class="btn btn-danger" ng-click="removeCol($index)" title="Delete col">Remove</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
-        <button class="btn btn-success" id="SaveButton" title="Save">Save</button>
-        <button class="btn btn-success" id="ExportButton" title="Export">Export</button>
-        <button class="btn btn-danger" id="LoadButton" title="Import">Import</button>
-        <button class="btn btn-success" style="float: right;" id="RunButton" title="Scrap data">Download CSV</button>
+        <div class="col-sm-9">
+            <button class="btn btn-success" ng-click="saveFormulas()" id="SaveButton" title="Save">Save</button>
+            <button class="btn btn-success" ng-click="serializeFormula(); showView = 'export'" title="Export">Export</button>
+            <button class="btn btn-danger" ng-click="showView = 'import'" title="Import">Import</button>
+        </div>
+        <div class="col-sm-3 text-sm-right">
+            <button class="btn btn-success" id="RunButton" ng-click="downloadCSV()" title="Scrap data">Download CSV</button>
+        </div>
     </nav>
 </fieldset>
-<div class="overlay" id="setNameOverlay">
+<div class="overlay ng-hide" ng-show="showView == 'name'">
     <fieldset class="single-input">
         <fieldset class="form-group row">
             <div class="col-sm-1"></div>
             <div class="col-sm-6">
-                <input id="SetFormulaInput" class="form-control" type="text">
+                <input id="SetFormulaInput" ng-model="formulaName" class="form-control" type="text">
             </div>
             <div class="col-sm-4">
-                <button class="btn btn-success" id="SetFormulaName" title="Set Formula Name">Set</button>
-                <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+                <button class="btn btn-success" ng-click="setFormulaName()" title="Set Formula Name">{{ (setNameMode == 'add') ? 'Add' : 'Rename' }}</button>
+                <button class="btn btn-danger" ng-click="showView = 'main'" title="Cancel">Cancel</button>
             </div>
             <div class="col-sm-1"></div>
         </fieldset>
     </div>
 </div>
-<div class="overlay" id="setExportFormula">
+<div class="overlay ng-hide" ng-show="showView == 'export'">
     <div class="textarea">
-        <textarea id="exportFormulaInput"></textarea>
+        <textarea id="exportFormulaInput" ng-model="serialized_formula"></textarea>
     </div>
     <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
-        <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+        <button class="btn btn-danger" ng-click="showView = 'main'" title="Cancel">Cancel</button>
     </nav>
 </div>
-<div class="overlay" id="setImportFormula">
+<div class="overlay ng-hide"  ng-show="showView == 'import'">
     <div class="textarea">
         <textarea id="importFormulaInput"></textarea>
     </div>
     <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
         <button class="btn btn-success" id="buttonImportFormula" title="Import Formula">Import Formula</button>
-        <button class="btn btn-danger CloseOverlay" title="Cancel">Cancel</button>
+        <button class="btn btn-danger" ng-click="showView = 'main'" title="Cancel">Cancel</button>
     </nav>
 </div>
 </body>

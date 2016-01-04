@@ -6,7 +6,6 @@
     height: 100%;
     background: #666;
     z-index: 10000;
-    display: none;
 }
 
 .overlay .container{
