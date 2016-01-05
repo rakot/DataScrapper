@@ -26,3 +26,9 @@ This configuration will get data from
  4. Load code below via Import
 
 > eyJ0aXRsZSI6ImdpdGh1YiIsInJvdyI6InRyLmpzLW5hdmlnYXRpb24taXRlbSIsImNvbHMiOlt7InRpdGxlIjoiRGlyIiwic2VsZWN0b3IiOiJ0ZC5jb250ZW50In0seyJ0aXRsZSI6Ik1lc3NhZ2UiLCJzZWxlY3RvciI6InRkLm1lc3NhZ2UifSx7InRpdGxlIjoiQWdlIiwic2VsZWN0b3IiOiJ0ZC5hZ2UifV19
+
+##### Tips and Tricks
+ 
+ If you don't know how to write a jQuery selector for the element, you can use this extension
+
+https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb
