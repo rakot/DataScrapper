@@ -32,3 +32,7 @@ This configuration will get data from
  If you don't know how to write a jQuery selector for the element, you can use this extension
 
 https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb
+
+##### Donations
+Donate via PayPal 
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QQDLJJSQT8RPW&lc=US&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
