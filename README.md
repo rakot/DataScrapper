@@ -11,7 +11,7 @@ Extension for Scrap data from web pages and download them as csv file. Source fi
 > https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Packaging_and_installation
 
 ### Getting started
-After extension installation, you will get a new button on your browser bar with claw on red background icon. It will open a new window with extension configurator(i have wanted to use detached_panel or devtools panel for this, but Firefox didn't allow to use it now). You should create a new config by pressing a "Add" button and give it some name.
+After extension installation, you will get a new button on your browser bar with claw on red background icon. It will open a new window with extension configurator(detached_panel for Chrome and window for Firefox while it doesn't support anything except window). You should create a new config by pressing a "Add" button and give it some name.
 Now you can assign an jQuery selector for row there data contained, you should do it, if all data in same container, like one table or something like that. If you data contained in different containers like two or more linked tables, you should skip this step.
 After this step, you can set Titles and jQuery selectors for each col that you wanna scrap your data, jQuery selector should not contain your "Row jQuery selector" if you assigned any on previous step.
 On final step you can press on "Download CSV" button and get your data in csv file.

@@ -78,6 +78,18 @@ angular.module('dataScrapper', [])
             });
         };
 
+        $scope.ImportFormula = function() {
+            var json = atob($scope.ImportFormulaText);
+            $scope.ImportFormulaText = '';
+            if(json) {
+                var data = jQuery.parseJSON(json);
+                if(data) {
+                    angular.copy(data, $scope.currentFormula);
+                    $scope.showView = 'main';
+                }
+            }
+        };
+
         chrome.runtime.sendMessage({action: "whatIsMyOpenerId"}, function(response) {
             tab_opener = response;
         });

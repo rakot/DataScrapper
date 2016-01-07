@@ -98,10 +98,10 @@
 </div>
 <div class="overlay ng-hide"  ng-show="showView == 'import'">
     <div class="textarea">
-        <textarea id="importFormulaInput"></textarea>
+        <textarea ng-model="ImportFormulaText"></textarea>
     </div>
     <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
-        <button class="btn btn-success" id="buttonImportFormula" title="Import Formula">Import Formula</button>
+        <button class="btn btn-success" ng-click="ImportFormula()" title="Import Formula">Import Formula</button>
         <button class="btn btn-danger" ng-click="showView = 'main'" title="Cancel">Cancel</button>
     </nav>
 </div>
