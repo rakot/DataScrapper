@@ -1,4 +1,6 @@
-function exportToCsv(filename, rows) {
+function exportToCsv(filename, rows, options) {
+    options = options || {};
+    var search_regexp = new RegExp("(\"|\\"+options.separator+"|\\n)", 'g');
     var processRow = function (row) {
         var finalVal = '';
         for (var j = 0; j < row.length; j++) {
@@ -7,16 +9,19 @@ function exportToCsv(filename, rows) {
                 innerValue = row[j].toLocaleString();
             }
             var result = innerValue.replace(/"/g, '""');
-            if (result.search(/("|,|\n)/g) >= 0)
+            if (result.search(search_regexp) >= 0)
                 result = '"' + result + '"';
             if (j > 0)
-                finalVal += ',';
+                finalVal += options.separator;
             finalVal += result;
         }
         return finalVal + '\n';
     };
 
-    var csvFile = "sep=,\n";
+    var csvFile = "";
+    if(options.excel_mode === 'yes') {
+        csvFile = "sep="+options.separator+"\n";
+    }
     for (var i = 0; i < rows.length; i++) {
         csvFile += processRow(rows[i]);
     }

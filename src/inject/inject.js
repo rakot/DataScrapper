@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(
 					var row = $(this);
 					var row_result = [];
 					formula.cols.forEach(function(el){
-						row_result.push($.trim(row.find(el.selector).text()) || '-');
+						row_result.push($.trim(row.find(el.selector).text()) || formula.default_value);
 					});
 					result.push(row_result);
 				});
@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(
 					for (var i in subresult[0]) {
 						var row = [];
 						subresult.forEach(function(el){
-							row.push(el[i] || '-');
+							row.push(el[i] || formula.default_value);
 						});
 						result.push(row);
 					}

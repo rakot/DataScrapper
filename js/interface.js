@@ -17,6 +17,17 @@ angular.module('dataScrapper', [])
 
         $scope.setCurrentFormula = function() {
             $scope.currentFormula = $scope.formulas[$scope.currentFormulaIndex];
+            if($scope.currentFormula.excel_mode === undefined) {
+                $scope.currentFormula.excel_mode = 'yes';
+            }
+
+            if($scope.currentFormula.default_value === undefined) {
+                $scope.currentFormula.default_value = '';
+            }
+
+            if($scope.currentFormula.separator === undefined) {
+                $scope.currentFormula.separator = ',';
+            }
         };
 
         $scope.addCol = function() {
@@ -73,7 +84,11 @@ angular.module('dataScrapper', [])
         $scope.downloadCSV = function() {
             chrome.tabs.sendMessage(tab_opener,{action: 'parseData', formula: $scope.currentFormula},{},function(response) {
                 if(response && response.length) {
-                    exportToCsv($scope.currentFormula.title+'.csv',response);
+                    exportToCsv($scope.currentFormula.title+'.csv',response,{
+                        default_value: ($scope.currentFormula.default_value === undefined) ? '' : $scope.currentFormula.default_value,
+                        separator: (!$scope.currentFormula.separator) ? ',' : $scope.currentFormula.separator,
+                        excel_mode: ($scope.currentFormula.excel_mode === undefined) ? 'yes' : $scope.currentFormula.excel_mode
+                    });
                 }
             });
         };
@@ -87,6 +102,15 @@ angular.module('dataScrapper', [])
                     angular.copy(data, $scope.currentFormula);
                     $scope.showView = 'main';
                 }
+            }
+        };
+
+        $scope.advanced = false;
+        $scope.showAdvanced = function() {
+            if($scope.advanced) {
+                $scope.advanced = false;
+            } else {
+                $scope.advanced = true;
             }
         };
 

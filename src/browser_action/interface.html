@@ -61,12 +61,44 @@
                 </tbody>
             </table>
         </div>
+        <div class="card card-inverse card-danger ng-hide" ng-show="advanced">
+            <div class="card-block">
+                <div class="card-blockquote">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Default value</span>
+                            <input class="form-control" ng-model="currentFormula.default_value" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Separator</span>
+                            <input class="form-control" ng-model="currentFormula.separator" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <fieldset class="radio">
+                            <span class="label label-default">CSV for Excel?</span>
+                            <label>
+                                <input type="radio" name="excel_mode" ng-model="currentFormula.excel_mode" value="yes">
+                                Yes
+                            </label>
+                            <label>
+                                <input type="radio" name="excel_mode" ng-model="currentFormula.excel_mode" value="no">
+                                No
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <nav class="navbar navbar-dark bg-inverse navbar-fixed-bottom">
         <div class="col-sm-9">
             <button class="btn btn-success" ng-click="saveFormulas()" id="SaveButton" title="Save">Save</button>
             <button class="btn btn-success" ng-click="serializeFormula(); showView = 'export'" title="Export">Export</button>
             <button class="btn btn-danger" ng-click="showView = 'import'" title="Import">Import</button>
+            <button class="btn btn-danger" ng-click="showAdvanced()">Advanced</button>
         </div>
         <div class="col-sm-3 text-sm-right">
             <button class="btn btn-success" id="RunButton" ng-click="downloadCSV()" title="Scrap data">Download CSV</button>
