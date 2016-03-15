@@ -1,6 +1,6 @@
 function exportToCsv(filename, rows, options) {
     options = options || {};
-    var search_regexp = new RegExp("(\"|\\"+options.separator+"|\\n)", 'g');
+    var search_regexp = new RegExp("(\"|\\"+options.separator.split('').join('\\')+"|\\n)", 'g');
     var processRow = function (row) {
         var finalVal = '';
         for (var j = 0; j < row.length; j++) {

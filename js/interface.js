@@ -3,12 +3,13 @@ angular.module('dataScrapper', [])
         var tab_opener = 0;
         $scope.formulas = [];
 
-        if(localStorage.getItem('formulas')) {
-            var json_formulas = JSON.parse(localStorage.getItem('formulas'));
-            json_formulas.forEach(function(val){
+        chrome.storage.local.get('formulas', function(data) {
+            var formulas = data.formulas || [];
+            formulas.forEach(function(val){
                 $scope.formulas.push(val);
             });
-        }
+            $scope.$digest();
+        });
 
         $scope.showView = 'main';
         $scope.setNameMode = 'add';
@@ -67,7 +68,9 @@ angular.module('dataScrapper', [])
         };
 
         $scope.saveFormulas = function() {
-            localStorage.setItem('formulas', JSON.stringify($scope.formulas));
+
+
+            chrome.storage.local.set({'formulas': $scope.formulas});
             if(showSaveAlertTimeout) {
                 $timeout.cancel(showSaveAlertTimeout);
             }
